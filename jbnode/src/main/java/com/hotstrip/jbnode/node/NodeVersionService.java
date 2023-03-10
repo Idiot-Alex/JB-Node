@@ -1,13 +1,10 @@
 package com.hotstrip.jbnode.node;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotstrip.jbnode.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.xml.soap.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
