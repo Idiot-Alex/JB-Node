@@ -7,6 +7,7 @@ import com.hotstrip.jbnode.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.xml.soap.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,12 +15,15 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class NodeVersionService {
 
-    public String getNodeList() {
+    public List<NodeModel> getNodeList() {
         String fileName ="node-list.json";
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
 
@@ -36,18 +40,22 @@ public class NodeVersionService {
             ObjectMapper objectMapper = new ObjectMapper();
 
             List<NodeModel> list = JacksonUtil.toArray(jsonString, NodeModel.class);
-//            objectMapper.readValue(jsonString, new TypeReference<List<NodeModel>>(){});
-            list.forEach(nodeModel -> {
-                log.info(nodeModel.toString());
-            });
 
+            Map<String, NodeModel> map = list.stream()
+                    .filter(n -> !"false".equals(n.getLts()))
+                    .collect(Collectors.toMap(n -> n.getVersion().split("\\.")[0],
+                            Function.identity(), (n1, n2) -> n1));
 
+//            map.forEach(n -> log.info(n.toString()));
+            log.info("map: {}", map.size());
 
+            new ArrayList<>(map.values()).forEach(n -> log.info(n.toString()));
+            return map.values().stream().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "1.0.0";
+        return null;
     }
 }
