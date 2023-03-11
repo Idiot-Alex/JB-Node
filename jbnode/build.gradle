@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.apache.httpcomponents:httpclient'
     implementation 'org.apache.httpcomponents:httpcore'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+    implementation 'org.aspectj:aspectjweaver'
     testImplementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

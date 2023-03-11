@@ -1,5 +1,6 @@
 package com.hotstrip.jbnode.node;
 
+import com.hotstrip.jbnode.common.annotations.CalcExecTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
@@ -25,6 +26,7 @@ public class NodeService {
     private RestTemplate restTemplate;
 
 
+    @CalcExecTime
     public void download(String url) throws Exception {
 
         String filePath = "node-v18.15.0-darwin-arm64.tar.gz";
@@ -54,40 +56,32 @@ public class NodeService {
 
         // 获取文件长度
         int contentLength = httpConn.getContentLength();
-        System.out.println("下载文件的大小（字节）：" + contentLength);
+        log.info("下载文件的大小：{}", formatFileSize(contentLength));
 
-        // 创建一个输入流来读取文件内容
-        InputStream inputStream = httpConn.getInputStream();
+        // 创建输入流 输出流
+        try (InputStream inputStream = httpConn.getInputStream();
+             FileOutputStream outputStream = new FileOutputStream(fileName)
+        ) {
+            byte[] buffer = new byte[4096];
+            int bytesRead = -1;
+            long totalBytesRead = 0;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+                totalBytesRead += bytesRead;
 
-        // 创建一个文件输出流来保存文件，注意：这里没有使用 BufferedOutputStream，并且将缓冲区设置为较大的值，可以提高性能
-        FileOutputStream outputStream = new FileOutputStream(fileName);
-        byte[] buffer = new byte[4096];
-        int bytesRead = -1;
-        long totalBytesRead = 0;
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-            totalBytesRead += bytesRead;
+                // 计算下载进度
+                int percent = (int) (totalBytesRead * 100 / contentLength);
 
-            // 根据需要，可以添加代码用于在控制台上显示下载进度
-            // ...
-
-            // 计算下载进度
-            int percent = (int) (totalBytesRead * 100 / contentLength);
-
-            // 清除控制台上的上一个输出，以显示进度条更新
-            log.info("\r");
-
-            // 使用日志输出进度条
-            log.info("\033[2K\r下载进度：[{}%] [{} / {}]", percent, formatFileSize(totalBytesRead),
-                    formatFileSize(contentLength));
-//            double progress = (double) totalBytesRead / contentLength * 100;
-//            log.info(String.format("Downloaded %.2f%%\r", progress));
+                // 使用日志输出进度条
+                log.info("\033[2K\r下载进度：[{}%] [{} / {}]", percent, formatFileSize(totalBytesRead),
+                        formatFileSize(contentLength));
+            }
         }
 
-        // 关闭输入流和输出流，释放资源
-        outputStream.close();
-        inputStream.close();
+        // 关闭连接，释放资源
         httpConn.disconnect();
+
+        log.info("下载完成");
     }
 
     /**
