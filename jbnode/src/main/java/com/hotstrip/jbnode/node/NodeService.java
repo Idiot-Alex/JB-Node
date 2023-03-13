@@ -2,21 +2,16 @@ package com.hotstrip.jbnode.node;
 
 import com.hotstrip.jbnode.common.annotations.CalcExecTime;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Collections;
 
 @Service
 @Slf4j
@@ -29,7 +24,7 @@ public class NodeService {
     @CalcExecTime
     public void download(String url) throws Exception {
 
-        String filePath = "node-v18.15.0-darwin-arm64.tar.gz";
+        String filePath = "build-dist/node-v18.15.0-darwin-arm64.tar.gz";
 
         downloadFile(url, filePath);
 
@@ -45,6 +40,9 @@ public class NodeService {
     }
 
     public void downloadFile(String fileUrl, String fileName) throws Exception {
+        if (!Files.exists(Paths.get(fileName))) {
+            Files.createDirectory(Paths.get(fileName).getParent());
+        }
         URL url = new URL(fileUrl);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         int responseCode = httpConn.getResponseCode();
