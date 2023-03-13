@@ -1,6 +1,7 @@
 package com.hotstrip.jbnode.node;
 
 import com.hotstrip.jbnode.common.annotations.CalcExecTime;
+import com.hotstrip.jbnode.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -40,9 +41,8 @@ public class NodeService {
     }
 
     public void downloadFile(String fileUrl, String fileName) throws Exception {
-        if (!Files.exists(Paths.get(fileName))) {
-            Files.createDirectory(Paths.get(fileName).getParent());
-        }
+        CommonUtil.createParentDirectory(fileName);
+
         URL url = new URL(fileUrl);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         int responseCode = httpConn.getResponseCode();
@@ -54,7 +54,7 @@ public class NodeService {
 
         // 获取文件长度
         int contentLength = httpConn.getContentLength();
-        log.info("下载文件的大小：{}", formatFileSize(contentLength));
+        log.info("下载文件的大小：{}", CommonUtil.formatFileSize(contentLength));
 
         // 创建输入流 输出流
         try (InputStream inputStream = httpConn.getInputStream();
@@ -71,8 +71,9 @@ public class NodeService {
                 int percent = (int) (totalBytesRead * 100 / contentLength);
 
                 // 使用日志输出进度条
-                log.info("\033[2K\r下载进度：[{}%] [{} / {}]", percent, formatFileSize(totalBytesRead),
-                        formatFileSize(contentLength));
+                log.info("\033[2K\r下载进度：[{}%] [{} / {}]",
+                        percent, CommonUtil.formatFileSize(totalBytesRead),
+                        CommonUtil.formatFileSize(contentLength));
             }
         }
 
@@ -82,19 +83,4 @@ public class NodeService {
         log.info("下载完成");
     }
 
-    /**
-     * 格式化文件大小，将字节数转为带单位的字符串
-     */
-    private String formatFileSize(long size) {
-        String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
-        int index = 0;
-        double value = size;
-
-        while (value > 1024 && index < units.length - 1) {
-            value = value / 1024;
-            index++;
-        }
-
-        return String.format("%.2f %s", value, units[index]);
-    }
 }

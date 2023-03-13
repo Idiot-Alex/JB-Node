@@ -34,6 +34,24 @@ public final class CommonUtil {
     }
 
     /**
+     * format File size
+     * @param size size
+     * @return
+     */
+    public static String formatFileSize(long size) {
+        String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+        int index = 0;
+        double value = size;
+
+        while (value > 1024 && index < units.length - 1) {
+            value = value / 1024;
+            index++;
+        }
+
+        return String.format("%.2f %s", value, units[index]);
+    }
+
+    /**
      * create parent directory
      * @param fileName file name
      * @throws IOException
