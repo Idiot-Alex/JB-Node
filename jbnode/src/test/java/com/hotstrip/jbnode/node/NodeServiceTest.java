@@ -4,11 +4,15 @@ import com.hotstrip.jbnode.JbNodeApplicationTests;
 import com.hotstrip.jbnode.domain.node.NodeService;
 import com.hotstrip.jbnode.common.util.CommonUtil;
 import com.hotstrip.jbnode.common.util.CompressUtil;
+import com.hotstrip.jbnode.domain.node.PackageJsonModel;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,9 +61,14 @@ class NodeServiceTest extends JbNodeApplicationTests {
     }
 
     @Test
-    void parsePackageJson() {
-        Path filePath = Paths.get("");
+    void parsePackageJson() throws Exception {
+        File packageJsonFile = ResourceUtils.getFile("classpath:package.json");
 
+        PackageJsonModel packageJsonModel = nodeService.parsePackageJsonFile(packageJsonFile);
+
+        log.info("packageJsonModel: {}", packageJsonModel);
+
+        Assert.notNull(packageJsonModel, "packageJsonModel is null");
     }
 
 }

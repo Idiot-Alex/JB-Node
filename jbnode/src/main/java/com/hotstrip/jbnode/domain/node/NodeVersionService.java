@@ -1,6 +1,7 @@
 package com.hotstrip.jbnode.domain.node;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hotstrip.jbnode.common.annotations.CalcExecTime;
 import com.hotstrip.jbnode.common.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class NodeVersionService {
 
+    @CalcExecTime
     public List<NodeModel> getNodeList() {
         String fileName ="node-list.json";
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);

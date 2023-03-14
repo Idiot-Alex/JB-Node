@@ -2,9 +2,7 @@ package com.hotstrip.jbnode.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -142,5 +140,25 @@ public final class CommonUtil {
             log.warn("Failed to exec {}, reason: {}", cmd, e.getMessage());
         }
         return map;
+    }
+
+    /**
+     * read file
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static String readFile(File file) throws Exception {
+        StringBuffer jsonString = new StringBuffer();
+        // 读取文件内容
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            // 将读取的内容存储为字符串
+            String line = reader.readLine();
+            while (line != null) {
+                jsonString.append(line);
+                line = reader.readLine();
+            }
+        }
+        return jsonString.toString();
     }
 }

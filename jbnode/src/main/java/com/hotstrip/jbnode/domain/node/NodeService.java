@@ -2,11 +2,13 @@ package com.hotstrip.jbnode.domain.node;
 
 import com.hotstrip.jbnode.common.annotations.CalcExecTime;
 import com.hotstrip.jbnode.common.util.CommonUtil;
+import com.hotstrip.jbnode.common.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -60,7 +62,15 @@ public class NodeService {
         // 关闭连接，释放资源
         httpConn.disconnect();
 
-        log.info("下载完成");
+        log.info("文件：{} 下载完成, 保存路径：{}", fileUrl, filePath);
     }
 
+    @CalcExecTime
+    public PackageJsonModel parsePackageJsonFile(File file) throws Exception {
+        String jsonString = CommonUtil.readFile(file);
+
+        PackageJsonModel packageJsonModel = JacksonUtil.toObject(jsonString, PackageJsonModel.class);
+
+        return packageJsonModel;
+    }
 }
