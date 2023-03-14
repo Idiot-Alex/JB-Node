@@ -71,4 +71,15 @@ class NodeServiceTest extends JbNodeApplicationTests {
         Assert.notNull(packageJsonModel, "packageJsonModel is null");
     }
 
+    @Test
+    void exec_npm_install_to_path() {
+        Path filePath = Paths.get("build-dist/node/node-v18.15.0-darwin-x64/bin/npm");
+        if (filePath.toFile().canExecute()) {
+            String cmd = String.format("%s install -g --prefix build-dist/node/node-v18.15.0-darwin-x64/node_moudles vue", filePath);
+            log.info("result: {}", CommonUtil.exec(cmd));
+        }  else {
+            log.error("{} can not execute", filePath);
+        }
+    }
+
 }
