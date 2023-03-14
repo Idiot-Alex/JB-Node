@@ -30,9 +30,12 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.5'
     implementation 'org.aspectj:aspectjweaver:1.9.7'
     implementation 'org.apache.commons:commons-compress:1.21'
-    testImplementation 'org.projectlombok:lombok:1.18.22'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    testImplementation group: 'org.projectlombok', name:'lombok', version:'1.18.26'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

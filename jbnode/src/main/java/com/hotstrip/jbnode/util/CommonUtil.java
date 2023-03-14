@@ -2,10 +2,14 @@ package com.hotstrip.jbnode.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public final class CommonUtil {
@@ -104,5 +108,39 @@ public final class CommonUtil {
             log.warn("Failed to delete {}, reason: {}", filePath, e.getMessage());
         }
         return false;
+    }
+
+    /**
+     * exec command
+     * @param cmd
+     * @return Map {
+     *     "cmd": "cmd",
+     *     "code": "0",
+     *     "result": "result"
+     * }
+     */
+    public static Map<String, String> exec(String cmd) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cmd", cmd);
+        try {
+            ProcessBuilder pb = new ProcessBuilder(cmd.split(" "));
+            Process p = pb.start();
+
+            // 读取进程输出
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            StringBuffer buffer = new StringBuffer();
+            while ((line = reader.readLine()) != null) {
+                buffer.append("\n").append(line);
+            }
+            p.waitFor();
+
+            map.put("code", String.valueOf(p.exitValue()));
+            map.put("result", buffer.toString());
+        } catch (Exception e) {
+            map.put("code", "-1");
+            log.warn("Failed to exec {}, reason: {}", cmd, e.getMessage());
+        }
+        return map;
     }
 }
