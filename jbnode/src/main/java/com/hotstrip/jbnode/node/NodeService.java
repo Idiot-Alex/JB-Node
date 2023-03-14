@@ -23,10 +23,7 @@ public class NodeService {
 
 
     @CalcExecTime
-    public void download(String url) throws Exception {
-
-        String filePath = "build-dist/node-v18.15.0-darwin-arm64.tar.gz";
-
+    public void download(String url, String filePath) throws Exception {
         downloadFile(url, filePath);
 
         //定义请求头的接收类型

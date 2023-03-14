@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @Slf4j
-public class JacksonUtil {
+public final class JacksonUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
