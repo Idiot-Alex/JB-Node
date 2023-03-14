@@ -14,19 +14,25 @@ import java.nio.file.Paths;
 class NodeServiceTest extends JbNodeApplicationTests {
     @Resource
     private NodeService nodeService;
+
+    private static String url;
+    private static String filePath;
+
+    static {
+        url = "https://nodejs.org/download/release/v18.15.0/node-v18.15.0-darwin-x64.tar.gz";
+        String[] splits = url.split("/");
+        filePath = String.format("build-dist/%s", splits[splits.length-1]);
+    }
     @Test
     void download() throws Exception {
-        String url = "https://nodejs.org/download/release/v18.15.0/node-v18.15.0-darwin-arm64.tar.gz";
-        String filePath = "build-dist/node-v18.15.0-darwin-arm64.tar.gz";
-        nodeService.download(url, filePath);
+        nodeService.downloadFile(url, filePath);
 
         Assert.isTrue(Files.exists(Paths.get(filePath)), "file not exists");
     }
 
     @Test
     void decompress() throws Exception {
-        String filePath = "build-dist/node-v18.15.0-darwin-arm64.tar.gz";
-        String outPath = "build-dist/node-v18.15.0-darwin-arm64";
+        String outPath = "build-dist/node";
 
         CompressUtil.decompressTarGz(filePath, outPath);
 

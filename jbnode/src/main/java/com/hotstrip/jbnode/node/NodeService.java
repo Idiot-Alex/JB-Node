@@ -21,24 +21,9 @@ public class NodeService {
     @Resource
     private RestTemplate restTemplate;
 
-
     @CalcExecTime
-    public void download(String url, String filePath) throws Exception {
-        downloadFile(url, filePath);
-
-        //定义请求头的接收类型
-//        RequestCallback requestCallback = request -> request.getHeaders()
-//                .setAccept(Arrays.asList(MediaType.APPLICATION_OCTET_STREAM, MediaType.ALL));
-//        //对响应进行流式处理而不是将其全部加载到内存中
-//        restTemplate.execute(url, HttpMethod.GET, requestCallback, clientHttpResponse -> {
-//            Files.copy(clientHttpResponse.getBody(), Paths.get(filePath));
-//            return null;
-//        });
-
-    }
-
-    public void downloadFile(String fileUrl, String fileName) throws Exception {
-        CommonUtil.createParentDirectory(fileName);
+    public void downloadFile(String fileUrl, String filePath) throws Exception {
+        CommonUtil.createParentDirectory(filePath);
 
         URL url = new URL(fileUrl);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -55,7 +40,7 @@ public class NodeService {
 
         // 创建输入流 输出流
         try (InputStream inputStream = httpConn.getInputStream();
-             FileOutputStream outputStream = new FileOutputStream(fileName)
+             FileOutputStream outputStream = new FileOutputStream(filePath)
         ) {
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
