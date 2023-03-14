@@ -1,7 +1,7 @@
 package com.hotstrip.jbnode.interceptor;
 
 import com.hotstrip.jbnode.common.annotations.CalcExecTime;
-import com.hotstrip.jbnode.util.CommonUtil;
+import com.hotstrip.jbnode.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

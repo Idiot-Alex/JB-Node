@@ -1,7 +1,7 @@
-package com.hotstrip.jbnode.node;
+package com.hotstrip.jbnode.domain.node;
 
 import com.hotstrip.jbnode.common.annotations.CalcExecTime;
-import com.hotstrip.jbnode.util.CommonUtil;
+import com.hotstrip.jbnode.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,8 +11,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Service
 @Slf4j

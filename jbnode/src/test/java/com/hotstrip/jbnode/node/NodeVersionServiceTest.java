@@ -1,11 +1,10 @@
 package com.hotstrip.jbnode.node;
 
 import com.hotstrip.jbnode.JbNodeApplicationTests;
+import com.hotstrip.jbnode.domain.node.NodeVersionService;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NodeVersionServiceTest extends JbNodeApplicationTests {
     @Resource

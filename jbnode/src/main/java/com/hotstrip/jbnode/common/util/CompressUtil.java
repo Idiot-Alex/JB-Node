@@ -1,4 +1,4 @@
-package com.hotstrip.jbnode.util;
+package com.hotstrip.jbnode.common.util;
 
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
@@ -9,6 +9,12 @@ import java.nio.file.Paths;
 
 public final class CompressUtil {
 
+    /**
+     * decompress tar.gz file
+     * @param inputFilePath input file path
+     * @param outputDirectory output directory
+     * @throws Exception exception
+     */
     public static void decompressTarGz(String inputFilePath, String outputDirectory) throws Exception {
         try (TarArchiveInputStream tarIn = new TarArchiveInputStream(new GzipCompressorInputStream(new FileInputStream(inputFilePath)))) {
             TarArchiveEntry tarEntry = tarIn.getNextTarEntry();

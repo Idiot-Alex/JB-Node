@@ -1,4 +1,4 @@
-package com.hotstrip.jbnode.node;
+package com.hotstrip.jbnode.domain.node;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

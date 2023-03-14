@@ -1,4 +1,4 @@
-package com.hotstrip.jbnode.command;
+package com.hotstrip.jbnode.domain.command;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;

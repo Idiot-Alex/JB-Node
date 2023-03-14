@@ -1,4 +1,4 @@
-package com.hotstrip.jbnode.util;
+package com.hotstrip.jbnode.common.util;
 
 import lombok.extern.slf4j.Slf4j;
 

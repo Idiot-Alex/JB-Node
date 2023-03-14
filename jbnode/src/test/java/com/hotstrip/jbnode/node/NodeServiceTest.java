@@ -1,8 +1,9 @@
 package com.hotstrip.jbnode.node;
 
 import com.hotstrip.jbnode.JbNodeApplicationTests;
-import com.hotstrip.jbnode.util.CommonUtil;
-import com.hotstrip.jbnode.util.CompressUtil;
+import com.hotstrip.jbnode.domain.node.NodeService;
+import com.hotstrip.jbnode.common.util.CommonUtil;
+import com.hotstrip.jbnode.common.util.CompressUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
@@ -42,7 +43,7 @@ class NodeServiceTest extends JbNodeApplicationTests {
     }
 
     @Test
-    void exec_node_version() throws Exception {
+    void exec_node_version() {
         Path filePath = Paths.get("build-dist/node/node-v18.15.0-darwin-x64/bin/node");
         if (filePath.toFile().canExecute()) {
             log.info("node can execute");
@@ -53,6 +54,12 @@ class NodeServiceTest extends JbNodeApplicationTests {
         }
 
         log.info("result: {}", CommonUtil.exec("ls -l"));
+    }
+
+    @Test
+    void parsePackageJson() {
+        Path filePath = Paths.get("");
+
     }
 
 }

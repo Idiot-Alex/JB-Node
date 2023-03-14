@@ -1,5 +1,6 @@
 package com.hotstrip.jbnode.util;
 
+import com.hotstrip.jbnode.common.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
@@ -7,8 +8,6 @@ import org.springframework.util.Assert;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 class CommonUtilTest {

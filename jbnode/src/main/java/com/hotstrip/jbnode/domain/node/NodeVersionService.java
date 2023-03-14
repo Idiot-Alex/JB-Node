@@ -1,7 +1,7 @@
-package com.hotstrip.jbnode.node;
+package com.hotstrip.jbnode.domain.node;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hotstrip.jbnode.util.JacksonUtil;
+import com.hotstrip.jbnode.common.util.JacksonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

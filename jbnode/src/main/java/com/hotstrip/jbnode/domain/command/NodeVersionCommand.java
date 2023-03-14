@@ -1,7 +1,7 @@
-package com.hotstrip.jbnode.command;
+package com.hotstrip.jbnode.domain.command;
 
-import com.hotstrip.jbnode.node.NodeModel;
-import com.hotstrip.jbnode.node.NodeVersionService;
+import com.hotstrip.jbnode.domain.node.NodeModel;
+import com.hotstrip.jbnode.domain.node.NodeVersionService;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
