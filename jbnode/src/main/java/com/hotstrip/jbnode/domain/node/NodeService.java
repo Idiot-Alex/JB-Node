@@ -40,8 +40,7 @@ public class NodeService {
 
         // 创建输入流 输出流
         try (InputStream inputStream = httpConn.getInputStream();
-             FileOutputStream outputStream = new FileOutputStream(filePath)
-        ) {
+             FileOutputStream outputStream = new FileOutputStream(filePath)) {
             byte[] buffer = new byte[4096];
             int bytesRead = -1;
             long totalBytesRead = 0;
